@@ -1,0 +1,1148 @@
+<!-- Dev-only clinical component library. Ported from client/templates/components.html (v1.1).
+     Shell chrome (brand bar, patient chip, privacy badge) is owned by app.html and is not repeated here.
+     Sample values are illustrative only. -->
+<div class="mx-auto w-full max-w-7xl space-y-12 py-8">
+  <!-- HERO / SPEC INTRO -->
+  <div class="card space-y-6 p-6 sm:p-8">
+    <div class="max-w-3xl space-y-3">
+      <div
+        class="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-slate-100 px-2.5 py-1 font-mono text-xs text-slate-600"
+      >
+        <span class="size-2 rounded-full bg-teal-500" aria-hidden="true"></span>
+        Tailwind CSS 4 • Heroicons v2 Outline/Mini • Tabular Nums • WCAG AA
+      </div>
+      <h1 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+        Clinical Component Library &amp; Design Pattern Catalog
+      </h1>
+      <p class="text-sm leading-relaxed text-slate-600 sm:text-base">
+        Standardized UI building blocks engineered for Anand (HealthPulse). Strict deterministic
+        status indicators, data-freshness flags, high-density clinical cards, accessible forms, and
+        feedback primitives.
+      </p>
+      <p class="text-xs text-slate-500">
+        Developer route <span class="font-mono">/dev/components</span>. Not linked from navigation.
+      </p>
+    </div>
+
+    <!-- Quick stats bar -->
+    <div class="grid grid-cols-2 gap-4 border-t border-slate-100 pt-6 text-xs sm:grid-cols-4">
+      <div>
+        <span class="block text-slate-400">Primary Brand Hue</span>
+        <span class="mt-0.5 flex items-center gap-1.5 font-semibold text-teal-700">
+          <span class="size-3 rounded-full bg-teal-600" aria-hidden="true"></span> Teal-600
+          (#0D9488)
+        </span>
+      </div>
+      <div>
+        <span class="block text-slate-400">Base Background</span>
+        <span class="mt-0.5 flex items-center gap-1.5 font-semibold text-slate-700">
+          <span
+            class="size-3 rounded-full border border-slate-300 bg-slate-50"
+            aria-hidden="true"
+          ></span>
+          Slate-50 (#F8FAFC)
+        </span>
+      </div>
+      <div>
+        <span class="block text-slate-400">Surface &amp; Card</span>
+        <span class="mt-0.5 flex items-center gap-1.5 font-semibold text-slate-700">
+          <span
+            class="size-3 rounded-full border border-slate-300 bg-white"
+            aria-hidden="true"
+          ></span>
+          White (#FFFFFF)
+        </span>
+      </div>
+      <div>
+        <span class="block text-slate-400">Numeric Align</span>
+        <span class="mt-0.5 block font-mono font-semibold text-slate-700">tabular-nums / mono</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION NAV -->
+  <nav
+    aria-label="Catalog sections"
+    class="flex flex-wrap gap-1 rounded-lg border border-slate-200 bg-slate-100/80 p-1 text-xs font-medium text-slate-600"
+  >
+    <a
+      href="#typography-colors"
+      class="rounded px-2.5 py-1 transition-colors hover:bg-white hover:text-slate-900"
+      >Tokens</a
+    >
+    <a
+      href="#buttons-badges"
+      class="rounded px-2.5 py-1 transition-colors hover:bg-white hover:text-slate-900"
+      >Buttons &amp; Badges</a
+    >
+    <a
+      href="#form-controls"
+      class="rounded px-2.5 py-1 transition-colors hover:bg-white hover:text-slate-900"
+      >Forms &amp; Search</a
+    >
+    <a
+      href="#cards-states"
+      class="rounded px-2.5 py-1 transition-colors hover:bg-white hover:text-slate-900"
+      >Cards &amp; Clinical</a
+    >
+    <a
+      href="#feedback-overlays"
+      class="rounded px-2.5 py-1 transition-colors hover:bg-white hover:text-slate-900"
+      >Feedback &amp; Loaders</a
+    >
+  </nav>
+
+  <!-- SECTION 1: ICONS & STATUS TOKENS -->
+  <section id="typography-colors" class="space-y-6">
+    <header class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">
+          1. Heroicons (v2) Catalog &amp; Semantic Color Tokens
+        </h2>
+        <p class="text-xs text-slate-500">
+          Curated iconography sized for clinical utility: 20–24px for primary UI, 16px for table
+          pills.
+        </p>
+      </div>
+      <span class="font-mono text-xs text-slate-400">Section 01 / 06</span>
+    </header>
+
+    <div class="card space-y-6 p-6">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">
+        Primary Core Heroicons (Outline)
+      </h3>
+      <ul class="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+        @for (icon of coreIcons; track icon.name) {
+          <li
+            class="flex flex-col items-center gap-2 rounded-lg border border-slate-100 bg-slate-50/50 p-3 text-center transition-all hover:border-teal-300 hover:bg-teal-50/30"
+          >
+            <ng-icon [name]="icon.name" size="24px" [ngClass]="icon.tone" aria-hidden="true" />
+            <span class="font-mono text-[11px] font-medium text-slate-700">{{ icon.name }}</span>
+            <span class="text-[10px] text-slate-400">{{ icon.usage }}</span>
+          </li>
+        }
+      </ul>
+
+      <div class="space-y-3 border-t border-slate-100 pt-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">
+          Deterministic Clinical Status Tokens
+        </h3>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="flex items-start gap-2.5 rounded-lg border status-normal p-3">
+            <span class="mt-1 size-2.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
+            <div>
+              <p class="flex items-center gap-1.5 text-xs font-semibold text-emerald-900">
+                NORMAL STATUS <span class="pill px-1.5 py-0 text-[10px]">Within Range</span>
+              </p>
+              <p class="mt-0.5 font-mono text-[11px] text-emerald-700">.status-normal</p>
+              <p class="mt-1 text-[10px] text-emerald-600">
+                Tests within calibrated reference low/high bounds.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2.5 rounded-lg border status-borderline p-3">
+            <span class="mt-1 size-2.5 rounded-full bg-amber-500" aria-hidden="true"></span>
+            <div>
+              <p class="flex items-center gap-1.5 text-xs font-semibold text-amber-900">
+                BORDERLINE STATUS <span class="pill px-1.5 py-0 text-[10px]">±10% Margin</span>
+              </p>
+              <p class="mt-0.5 font-mono text-[11px] text-amber-800">.status-borderline</p>
+              <p class="mt-1 text-[10px] text-amber-700">
+                Tests approaching upper or lower limit threshold.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2.5 rounded-lg border status-significant p-3">
+            <span class="mt-1 size-2.5 rounded-full bg-rose-500" aria-hidden="true"></span>
+            <div>
+              <p class="flex items-center gap-1.5 text-xs font-semibold text-rose-900">
+                SIGNIFICANT OUT-OF-RANGE <span class="pill px-1.5 py-0 text-[10px]">Alert</span>
+              </p>
+              <p class="mt-0.5 font-mono text-[11px] text-rose-700">.status-significant</p>
+              <p class="mt-1 text-[10px] text-rose-600">
+                Exceeds boundary past the 10% safety buffer.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2.5 rounded-lg border status-stale p-3">
+            <span class="mt-1 size-2.5 rounded-full bg-slate-400" aria-hidden="true"></span>
+            <div>
+              <p class="flex items-center gap-1.5 text-xs font-semibold text-slate-800">
+                STALE DATA (&gt;90 DAYS) <span class="pill px-1.5 py-0 text-[10px]">Expired</span>
+              </p>
+              <p class="mt-0.5 font-mono text-[11px] text-slate-600">.status-stale</p>
+              <p class="mt-1 text-[10px] text-slate-500">
+                Explicit temporal distance warning applied.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: BUTTONS, BADGES & AVATARS -->
+  <section id="buttons-badges" class="space-y-6">
+    <header class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">
+          2. Buttons, Clinical Badges &amp; Patient Avatars
+        </h2>
+        <p class="text-xs text-slate-500">
+          Accessible states, icon pairings, and multi-profile avatar indicators.
+        </p>
+      </div>
+      <span class="font-mono text-xs text-slate-400">Section 02 / 06</span>
+    </header>
+
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+      <!-- Button hierarchy (8 cols) -->
+      <div class="card space-y-6 p-6 lg:col-span-8">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">
+          Button Hierarchy &amp; Interactive States
+        </h3>
+
+        <div class="space-y-2">
+          <span class="text-xs font-medium text-slate-700">Primary Actions (Teal Brand)</span>
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-teal-600/20 transition-colors hover:bg-teal-700 active:bg-teal-800"
+            >
+              <ng-icon name="heroPlus" size="16px" aria-hidden="true" />
+              <span>Add Health Record</span>
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-3.5 py-1.5 text-xs font-medium text-white shadow-sm transition-colors hover:bg-teal-700"
+            >
+              <ng-icon name="heroCheck" size="14px" aria-hidden="true" />
+              <span>Confirm Row</span>
+            </button>
+            <button
+              type="button"
+              disabled
+              class="inline-flex cursor-not-allowed items-center gap-2 rounded-lg bg-teal-600/50 px-4 py-2 text-sm font-medium text-white/80"
+            >
+              <span>Saving Changes…</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-2 border-t border-slate-100 pt-2">
+          <span class="text-xs font-medium text-slate-700">Secondary &amp; Outlined Utilities</span>
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:border-slate-400 hover:bg-slate-50"
+            >
+              <ng-icon name="heroPrinter" size="16px" class="text-slate-500" aria-hidden="true" />
+              <span>Print A4 Snapshot</span>
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:border-slate-400 hover:bg-slate-50"
+            >
+              <ng-icon
+                name="heroArrowDownTray"
+                size="16px"
+                class="text-slate-500"
+                aria-hidden="true"
+              />
+              <span>Export JSON</span>
+            </button>
+            <button
+              type="button"
+              class="rounded-md bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-200"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-2 border-t border-slate-100 pt-2">
+          <span class="text-xs font-medium text-slate-700">Destructive &amp; Alert Buttons</span>
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              class="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 bg-rose-50 px-3.5 py-2 text-sm font-medium text-rose-700 transition-colors hover:bg-rose-100"
+            >
+              <ng-icon name="heroTrash" size="16px" class="text-rose-600" aria-hidden="true" />
+              <span>Discard Scan</span>
+            </button>
+            <button
+              type="button"
+              aria-label="Refresh"
+              title="Refresh"
+              class="rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+            >
+              <ng-icon name="heroArrowPath" size="20px" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Clinical pills -->
+        <div class="space-y-2 border-t border-slate-100 pt-2">
+          <span class="text-xs font-medium text-slate-700">Clinical Data &amp; Severity Pills</span>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="pill status-normal"
+              ><span class="size-1.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
+              Normal</span
+            >
+            <span class="pill status-borderline"
+              ><span class="size-1.5 rounded-full bg-amber-500" aria-hidden="true"></span>
+              Borderline</span
+            >
+            <span class="pill status-significant"
+              ><span class="size-1.5 rounded-full bg-rose-500" aria-hidden="true"></span>
+              Significant High (↑ 7.2%)</span
+            >
+            <span class="pill status-stale"
+              ><ng-icon name="heroClock" size="12px" aria-hidden="true" /> Tested 4 mo ago
+              (Stale)</span
+            >
+            <span
+              class="code inline-flex items-center rounded border border-teal-200 bg-teal-50 px-2 py-0.5 font-semibold text-teal-700"
+              >LOINC 4548-4</span
+            >
+            <span class="pill border-purple-200 bg-purple-50 text-purple-700">Blood Group: B+</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Avatars & profile switcher (4 cols) -->
+      <div class="card space-y-5 p-6 lg:col-span-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">
+          Patient &amp; Family Avatars
+        </h3>
+        <p class="text-xs text-slate-500">
+          Visual hierarchy for profiles, with age badges and relationship markers.
+        </p>
+
+        <div class="flex items-center gap-4 py-2">
+          <div class="relative">
+            <div
+              class="flex size-14 items-center justify-center rounded-full border-2 border-teal-500 bg-teal-100 text-lg font-bold text-teal-800 shadow-sm"
+            >
+              KG
+            </div>
+            <span
+              class="absolute bottom-0 right-0 size-3.5 rounded-full bg-emerald-500 ring-2 ring-white"
+              aria-hidden="true"
+            ></span>
+          </div>
+          <div class="relative">
+            <div
+              class="flex size-10 items-center justify-center rounded-full border border-sky-300 bg-sky-100 text-sm font-semibold text-sky-800"
+            >
+              SG
+            </div>
+            <span
+              class="absolute -right-1 -top-1 rounded border border-slate-200 bg-slate-100 px-1 font-mono text-[9px] text-slate-600"
+              >68y</span
+            >
+          </div>
+          <div
+            class="flex size-8 items-center justify-center rounded-full border border-indigo-200 bg-indigo-100 text-xs font-medium text-indigo-700"
+          >
+            AG
+          </div>
+          <div
+            class="flex size-6 items-center justify-center rounded-full bg-amber-100 text-[10px] font-medium text-amber-800"
+          >
+            P
+          </div>
+        </div>
+
+        <!-- Active profile switcher (interactive) -->
+        <div
+          class="space-y-2 rounded-lg border border-slate-200 bg-slate-50/50 p-3"
+          role="group"
+          aria-labelledby="profile-switcher-label"
+        >
+          <span
+            id="profile-switcher-label"
+            class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500"
+            >Active Profile Switcher</span
+          >
+          @for (profile of profiles; track profile.id) {
+            <button
+              type="button"
+              class="flex w-full items-center justify-between rounded-lg p-2 text-left transition-colors"
+              [ngClass]="
+                activeProfileId() === profile.id
+                  ? 'border border-teal-500 bg-white shadow-xs'
+                  : 'text-slate-600 hover:bg-white'
+              "
+              [attr.aria-pressed]="activeProfileId() === profile.id"
+              (click)="selectProfile(profile.id)"
+            >
+              <span class="flex items-center gap-2.5">
+                <span [ngClass]="profile.avatarClass">{{ profile.initials }}</span>
+                <span>
+                  <span class="block text-xs font-semibold text-slate-800">{{ profile.name }}</span>
+                  <span class="block font-mono text-[10px] text-slate-500">{{ profile.meta }}</span>
+                </span>
+              </span>
+              @if (activeProfileId() === profile.id) {
+                <ng-icon name="heroCheck" size="16px" class="text-teal-600" aria-hidden="true" />
+              } @else {
+                <span class="text-[10px] text-slate-400">Switch</span>
+              }
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: FORM CONTROLS, SEARCH & CLINICAL INPUTS -->
+  <section id="form-controls" class="space-y-6">
+    <header class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">
+          3. Form Controls, Search Bars &amp; Clinical Inputs
+        </h2>
+        <p class="text-xs text-slate-500">
+          Inputs with unit affixes, catalog-matched selects, switches, and validation feedback.
+        </p>
+      </div>
+      <span class="font-mono text-xs text-slate-400">Section 03 / 06</span>
+    </header>
+
+    <div class="card space-y-6 p-6">
+      <!-- Search bar -->
+      <div class="space-y-2">
+        <label
+          for="catalog-search"
+          class="block text-xs font-semibold uppercase tracking-wider text-slate-700"
+          >Global &amp; Clinical Test Search Bar</label
+        >
+        <div class="relative max-w-2xl">
+          <ng-icon
+            name="heroMagnifyingGlass"
+            size="16px"
+            class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+            aria-hidden="true"
+          />
+          <input
+            id="catalog-search"
+            type="search"
+            placeholder="Search tests (e.g. HbA1c, Creatinine, Lipid Panel) or doctor visits…"
+            value="HbA1c"
+            class="w-full rounded-lg border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-24 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 hover:bg-white focus:border-teal-500 focus:bg-white focus:ring-2 focus:ring-teal-500/20"
+          />
+          <div class="absolute inset-y-0 right-0 flex items-center gap-1.5 pr-2.5">
+            <kbd
+              class="rounded border border-slate-300 bg-slate-200/80 px-1.5 py-0.5 font-mono text-[10px] text-slate-600"
+              >⌘K</kbd
+            >
+            <button
+              type="button"
+              aria-label="Clear search"
+              class="rounded p-1 text-slate-400 hover:text-slate-600"
+            >
+              <ng-icon name="heroXMark" size="14px" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="grid grid-cols-1 gap-6 border-t border-slate-100 pt-4 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        <!-- Numeric value with unit affix -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label for="lab-value" class="text-xs font-medium text-slate-700">Lab Test Value</label>
+            <span class="font-mono text-[10px] text-teal-600">Matched: HBA1C</span>
+          </div>
+          <div class="flex rounded-lg shadow-xs">
+            <input
+              id="lab-value"
+              type="text"
+              inputmode="decimal"
+              value="7.2"
+              class="w-full rounded-l-lg border border-r-0 border-slate-200 px-3 py-2 font-mono text-sm tabular-nums text-slate-900 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20"
+            />
+            <span
+              class="inline-flex items-center rounded-r-lg border border-slate-200 bg-slate-100 px-3 font-mono text-xs font-medium text-slate-600"
+              >% (NGSP)</span
+            >
+          </div>
+          <p class="text-[10px] text-slate-400">
+            Canonical unit automatically converted from mmol/mol.
+          </p>
+        </div>
+
+        <!-- Reference range -->
+        <fieldset class="space-y-1.5">
+          <legend class="flex w-full items-center justify-between">
+            <span class="text-xs font-medium text-slate-700">Reference Limits (Low – High)</span>
+            <span class="text-[10px] text-slate-400">Source: Report</span>
+          </legend>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="relative">
+              <label for="ref-low" class="sr-only">Reference low</label>
+              <input
+                id="ref-low"
+                type="text"
+                inputmode="decimal"
+                value="4.0"
+                class="w-full rounded-lg border border-slate-200 px-3 py-2 font-mono text-sm tabular-nums text-slate-900 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20"
+              />
+              <span class="pointer-events-none absolute right-2 top-2 text-[10px] text-slate-400"
+                >Min</span
+              >
+            </div>
+            <div class="relative">
+              <label for="ref-high" class="sr-only">Reference high</label>
+              <input
+                id="ref-high"
+                type="text"
+                inputmode="decimal"
+                value="5.6"
+                class="w-full rounded-lg border border-slate-200 px-3 py-2 font-mono text-sm tabular-nums text-slate-900 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20"
+              />
+              <span class="pointer-events-none absolute right-2 top-2 text-[10px] text-slate-400"
+                >Max</span
+              >
+            </div>
+          </div>
+          <p class="flex items-center gap-1 text-[10px] font-medium text-rose-600">
+            <ng-icon name="heroExclamationTriangle" size="12px" aria-hidden="true" />
+            7.2% exceeds high threshold (5.6%) by +28.5%
+          </p>
+        </fieldset>
+
+        <!-- Organ system select -->
+        <div class="space-y-1.5">
+          <label for="organ-system" class="block text-xs font-medium text-slate-700"
+            >Target Body Organ System</label
+          >
+          <div class="relative">
+            <select
+              id="organ-system"
+              class="w-full appearance-none rounded-lg border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm text-slate-900 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20"
+            >
+              <option value="pancreas" selected>Pancreas (Endocrine / Glucose)</option>
+              <option value="kidneys">Kidneys (Renal / Creatinine)</option>
+              <option value="liver">Liver (Hepatic / SGPT/SGOT)</option>
+              <option value="heart">Heart &amp; Cardiovascular (Lipids)</option>
+              <option value="thyroid">Thyroid (TSH / T3 / T4)</option>
+            </select>
+            <ng-icon
+              name="heroChevronDown"
+              size="16px"
+              class="pointer-events-none absolute inset-y-0 right-2.5 my-auto text-slate-400"
+              aria-hidden="true"
+            />
+          </div>
+          <p class="text-[10px] text-slate-400">Mapped deterministically from test catalog.</p>
+        </div>
+
+        <!-- Sample date -->
+        <div class="space-y-1.5">
+          <label for="sample-date" class="block text-xs font-medium text-slate-700"
+            >Sample Date</label
+          >
+          <input
+            id="sample-date"
+            type="date"
+            value="2026-10-28"
+            class="w-full rounded-lg border border-slate-200 px-3 py-2 font-mono text-sm text-slate-900 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20"
+          />
+          <p class="text-[10px] text-slate-400">
+            Freshness: <span class="font-medium text-slate-700">Tested 18 days ago</span>
+          </p>
+        </div>
+
+        <!-- Privacy switch (stateful) -->
+        <div class="space-y-2">
+          <span id="inference-label" class="block text-xs font-medium text-slate-700"
+            >Privacy &amp; Execution Mode</span
+          >
+          <div
+            class="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 p-2.5"
+          >
+            <div class="flex items-center gap-2">
+              <ng-icon
+                name="heroShieldCheck"
+                size="16px"
+                class="text-emerald-600"
+                aria-hidden="true"
+              />
+              <div class="text-xs">
+                <span class="block font-medium text-slate-800">Local Vision LLM (Ollama)</span>
+                <span class="text-[10px] text-slate-500">Zero data leaves this machine</span>
+              </div>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-labelledby="inference-label"
+              [attr.aria-checked]="localInferenceEnabled()"
+              (click)="toggleLocalInference()"
+              [ngClass]="localInferenceEnabled() ? 'bg-teal-600' : 'bg-slate-300'"
+              class="relative inline-flex h-5 w-10 shrink-0 items-center rounded-full p-0.5 transition-colors"
+            >
+              <span
+                class="block size-4 rounded-full bg-white shadow-sm transition-transform"
+                [ngClass]="localInferenceEnabled() ? 'translate-x-5' : 'translate-x-0'"
+              ></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Severity radio group (stateful) -->
+        <fieldset class="space-y-2">
+          <legend class="text-xs font-medium text-slate-700">Allergy Reaction Severity</legend>
+          <div class="flex items-center gap-4 pt-1">
+            <label class="flex cursor-pointer items-center gap-2 text-xs text-slate-700">
+              <input
+                type="radio"
+                name="severity"
+                value="mild"
+                class="size-4 border-slate-300 text-teal-600 focus:ring-teal-500"
+                [checked]="severity() === 'mild'"
+                (change)="setSeverity('mild')"
+              />
+              <span>Mild</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-2 text-xs text-slate-700">
+              <input
+                type="radio"
+                name="severity"
+                value="moderate"
+                class="size-4 border-slate-300 text-teal-600 focus:ring-teal-500"
+                [checked]="severity() === 'moderate'"
+                (change)="setSeverity('moderate')"
+              />
+              <span
+                [class.font-medium]="severity() === 'moderate'"
+                [class.text-amber-800]="severity() === 'moderate'"
+                >Moderate</span
+              >
+            </label>
+            <label class="flex cursor-pointer items-center gap-2 text-xs text-slate-700">
+              <input
+                type="radio"
+                name="severity"
+                value="severe"
+                class="size-4 border-slate-300 text-rose-600 focus:ring-rose-500"
+                [checked]="severity() === 'severe'"
+                (change)="setSeverity('severe')"
+              />
+              <span
+                [class.font-medium]="severity() === 'severe'"
+                [class.text-rose-700]="severity() === 'severe'"
+                >Severe / Anaphylaxis</span
+              >
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: CARDS, CLINICAL SUMMARIES & EMPTY STATES -->
+  <section id="cards-states" class="space-y-6">
+    <header class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">
+          4. Cards, Clinical Summaries &amp; Empty States
+        </h2>
+        <p class="text-xs text-slate-500">
+          Doctor-visit snapshot panels, out-of-range lab highlights, and zero-data states.
+        </p>
+      </div>
+      <span class="font-mono text-xs text-slate-400">Section 04 / 06</span>
+    </header>
+
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+      <!-- Clinical snapshot card (7 cols) -->
+      <article class="card space-y-4 p-6 shadow-sm lg:col-span-7" aria-labelledby="snapshot-title">
+        <header class="flex items-start justify-between gap-4">
+          <div>
+            <span class="block text-[10px] font-bold uppercase tracking-wider text-teal-600"
+              >Doctor-Visit Snapshot Card</span
+            >
+            <h3 id="snapshot-title" class="mt-0.5 text-base font-bold text-slate-900">
+              Critical Out-of-Range Clinical Panel
+            </h3>
+            <p class="text-xs text-slate-500">
+              Deterministic out-of-range laboratory values with chronological delta comparison.
+            </p>
+          </div>
+          <button
+            type="button"
+            class="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-200"
+          >
+            <ng-icon
+              name="heroArrowDownTray"
+              size="14px"
+              class="text-slate-500"
+              aria-hidden="true"
+            />
+            <span>A4 PDF</span>
+          </button>
+        </header>
+
+        <!-- Allergy banner -->
+        <div class="allergy-alert items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <ng-icon
+              name="heroExclamationTriangle"
+              size="20px"
+              class="shrink-0 text-rose-600"
+              aria-hidden="true"
+            />
+            <div>
+              <span class="block text-xs font-bold text-rose-900">ALLERGY ALERT: Penicillin</span>
+              <span class="block text-[11px] text-rose-700"
+                >Reaction: Generalized hives &amp; moderate rash (Recorded 2022)</span
+              >
+            </div>
+          </div>
+          <span
+            class="rounded bg-rose-200/80 px-2 py-0.5 text-[10px] font-bold uppercase text-rose-800"
+            >High Severity</span
+          >
+        </div>
+
+        <!-- Clinical data rows -->
+        <ul
+          class="divide-y divide-slate-100 overflow-hidden rounded-lg border border-slate-200 text-xs"
+        >
+          @for (row of labRows; track row.test) {
+            <li
+              class="flex items-center justify-between gap-4 p-3 transition-colors hover:bg-slate-50"
+              [ngClass]="row.stale ? 'bg-slate-50/60' : ''"
+            >
+              <div class="space-y-0.5">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span
+                    class="font-bold"
+                    [ngClass]="row.stale ? 'text-slate-600' : 'text-slate-800'"
+                    >{{ row.test }}</span
+                  >
+                  <span
+                    class="rounded px-1.5 font-mono text-[10px]"
+                    [ngClass]="
+                      row.stale ? 'bg-slate-200 text-slate-700' : 'bg-teal-50 text-teal-700'
+                    "
+                    >{{ row.organ }}</span
+                  >
+                  @if (row.stale) {
+                    <span
+                      class="inline-flex items-center gap-1 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-800"
+                    >
+                      <ng-icon
+                        name="heroClock"
+                        size="12px"
+                        class="text-amber-600"
+                        aria-hidden="true"
+                      />
+                      Stale ({{ row.staleLabel }})
+                    </span>
+                  }
+                </div>
+                <div class="text-[11px] text-slate-400">{{ row.source }}</div>
+              </div>
+              <div class="shrink-0 text-right">
+                <div class="flex items-center justify-end gap-1.5">
+                  <span
+                    class="font-mono text-sm font-bold tabular-nums"
+                    [ngClass]="row.valueClass"
+                    >{{ row.value }}</span
+                  >
+                  <span class="font-bold" [ngClass]="row.valueClass" aria-hidden="true">{{
+                    row.arrow
+                  }}</span>
+                  <span
+                    class="rounded border px-1.5 py-0.5 text-[10px] font-semibold"
+                    [ngClass]="row.badgeClass"
+                    >{{ row.badge }}</span
+                  >
+                </div>
+                <div class="mt-0.5 font-mono text-[11px] text-slate-500">{{ row.reference }}</div>
+              </div>
+            </li>
+          }
+        </ul>
+
+        <footer class="flex items-center justify-between pt-2 text-[11px] text-slate-400">
+          <span>Deterministic engine rules applied • No AI hallucination</span>
+          <span>Generated: Today, 14:32</span>
+        </footer>
+      </article>
+
+      <!-- Empty state (5 cols) -->
+      <article
+        class="card flex flex-col justify-between p-6 shadow-sm lg:col-span-5"
+        aria-labelledby="empty-state-title"
+      >
+        <div>
+          <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400"
+            >Component Pattern</span
+          >
+          <h3 id="empty-state-title" class="mt-0.5 text-base font-bold text-slate-900">
+            Standard Empty State
+          </h3>
+          <p class="text-xs text-slate-500">
+            Used when a patient profile, lab panel, or visit history has no uploaded records yet.
+          </p>
+        </div>
+
+        <div class="my-auto flex flex-col items-center px-4 py-8 text-center">
+          <div
+            class="mb-3 flex size-14 items-center justify-center rounded-2xl border border-teal-100 bg-teal-50 text-teal-600 shadow-inner"
+          >
+            <ng-icon name="heroDocumentPlus" size="28px" aria-hidden="true" />
+          </div>
+          <h4 class="text-sm font-bold text-slate-900">No Lab Records Uploaded Yet</h4>
+          <p class="mt-1 max-w-xs text-xs leading-relaxed text-slate-500">
+            Upload blood test reports, lipid panels, or doctor prescriptions (PDF or scan) to
+            generate clinical trendlines.
+          </p>
+          <div class="mt-4 flex items-center gap-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-3.5 py-1.5 text-xs font-medium text-white shadow-sm transition-colors hover:bg-teal-700"
+            >
+              <ng-icon name="heroArrowUpTray" size="14px" aria-hidden="true" />
+              <span>Upload Report (PDF/PNG)</span>
+            </button>
+            <button
+              type="button"
+              class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50"
+            >
+              Manual Entry
+            </button>
+          </div>
+        </div>
+
+        <footer
+          class="flex items-center gap-1.5 border-t border-slate-100 pt-3 text-[11px] text-slate-400"
+        >
+          <ng-icon name="heroQuestionMarkCircle" size="14px" aria-hidden="true" />
+          <span>Supports scanned lab reports via local vision model.</span>
+        </footer>
+      </article>
+    </div>
+  </section>
+
+  <!-- SECTION 5: TOASTS, SNACKBARS & ALERT BANNERS -->
+  <section id="feedback-overlays" class="space-y-6">
+    <header class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">5. Toasts, Snackbars &amp; Alert Banners</h2>
+        <p class="text-xs text-slate-500">
+          Transient notifications, offline sync confirmations, and privacy alerts.
+        </p>
+      </div>
+      <span class="font-mono text-xs text-slate-400">Section 05 / 06</span>
+    </header>
+
+    <div class="flex items-center justify-between">
+      <span class="text-xs text-slate-500">Dismissed toasts stay hidden until restored.</span>
+      <button
+        type="button"
+        (click)="resetToasts()"
+        class="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-200"
+      >
+        Restore toasts
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Toast 1: success -->
+      @if (savedToastOpen()) {
+        <div
+          role="status"
+          class="relative flex items-start gap-3 overflow-hidden rounded-lg border border-slate-200 bg-white p-4 shadow-lg"
+        >
+          <span class="absolute inset-y-0 left-0 w-1 bg-emerald-500" aria-hidden="true"></span>
+          <span
+            class="flex size-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"
+          >
+            <ng-icon name="heroCheck" size="16px" aria-hidden="true" />
+          </span>
+          <div class="flex-1 space-y-0.5">
+            <p class="text-xs font-bold text-slate-800">Lab Results Saved Successfully</p>
+            <p class="text-[11px] text-slate-500">
+              14 clinical values confirmed and written to local encrypted database.
+            </p>
+          </div>
+          <button
+            type="button"
+            aria-label="Dismiss notification"
+            (click)="savedToastOpen.set(false)"
+            class="text-slate-400 hover:text-slate-600"
+          >
+            <ng-icon name="heroXMark" size="14px" aria-hidden="true" />
+          </button>
+        </div>
+      }
+
+      <!-- Toast 2: remote provider snackbar -->
+      @if (remoteToastOpen()) {
+        <div
+          role="alert"
+          class="relative flex items-start gap-3 overflow-hidden rounded-lg bg-slate-900 p-4 text-white shadow-lg"
+        >
+          <span class="absolute inset-y-0 left-0 w-1 bg-amber-500" aria-hidden="true"></span>
+          <span
+            class="flex size-8 shrink-0 items-center justify-center rounded-full bg-amber-500/20 text-amber-400"
+          >
+            <ng-icon name="heroExclamationTriangle" size="16px" aria-hidden="true" />
+          </span>
+          <div class="flex-1 space-y-1">
+            <p class="text-xs font-bold text-white">Remote Provider Active</p>
+            <p class="text-[11px] text-slate-300">
+              OpenAI compatible remote LLM enabled. Documents will leave device.
+            </p>
+            <div class="flex items-center gap-3 pt-1">
+              <button type="button" class="text-xs font-semibold text-teal-400 hover:underline">
+                Switch to Local
+              </button>
+              <button
+                type="button"
+                (click)="remoteToastOpen.set(false)"
+                class="text-xs text-slate-400 hover:text-slate-200"
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Toast 3: OCR progress -->
+      <div
+        role="status"
+        aria-live="polite"
+        class="flex items-start gap-3 rounded-lg border border-teal-200 bg-teal-50/20 p-4 shadow-lg"
+      >
+        <span
+          class="flex size-8 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-700"
+        >
+          <svg
+            class="size-4 animate-spin text-teal-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            ></path>
+          </svg>
+        </span>
+        <div class="flex-1 space-y-0.5">
+          <p class="text-xs font-bold text-slate-800">Processing "lipid_nov26.pdf"</p>
+          <p class="text-[11px] text-slate-500">
+            Apache PDFBox &amp; Ollama extracting raw table rows (Page 1/2)…
+          </p>
+        </div>
+        <span
+          class="rounded bg-teal-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-teal-700"
+          >64%</span
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: LOADERS, SKELETONS & PROGRESS INDICATORS -->
+  <section class="space-y-6">
+    <header class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900">
+          6. Loaders, Spinners &amp; Skeleton Screens
+        </h2>
+        <p class="text-xs text-slate-500">
+          Shimmer states and spinners that prevent layout shift during asynchronous PDF ingestion.
+        </p>
+      </div>
+      <span class="font-mono text-xs text-slate-400">Section 06 / 06</span>
+    </header>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <!-- Spinners & progress -->
+      <div class="card space-y-6 p-6">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">
+          Activity Spinners &amp; Clinical Progress Bars
+        </h3>
+
+        <div class="flex items-center gap-6">
+          <div class="flex items-center gap-2">
+            <svg
+              class="size-4 animate-spin text-teal-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              role="status"
+              aria-label="Loading 16px"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              ></path>
+            </svg>
+            <span class="text-xs font-medium text-slate-600">16px Inline</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg
+              class="size-6 animate-spin text-teal-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              ></path>
+            </svg>
+            <span class="text-xs font-medium text-slate-600">24px Component</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg
+              class="size-8 animate-spin text-teal-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              ></path>
+            </svg>
+            <span class="text-xs font-medium text-slate-600">32px Modal</span>
+          </div>
+        </div>
+
+        <!-- Deterministic progress -->
+        <div class="space-y-2 border-t border-slate-100 pt-2">
+          <div class="flex items-center justify-between text-xs">
+            <span id="mapping-progress-label" class="font-medium text-slate-700"
+              >Lab Catalog Mapping Completion</span
+            >
+            <span class="font-mono font-semibold text-teal-700">12 / 14 Matched (85%)</span>
+          </div>
+          <div
+            class="h-2 w-full overflow-hidden rounded-full bg-slate-100"
+            role="progressbar"
+            aria-labelledby="mapping-progress-label"
+            aria-valuemin="0"
+            aria-valuemax="14"
+            aria-valuenow="12"
+          >
+            <div
+              class="h-full rounded-full bg-teal-600 transition-all duration-500"
+              [style.width.%]="85"
+            ></div>
+          </div>
+          <div class="flex items-center justify-between text-[10px] text-slate-400">
+            <span>Automatic fuzzy match: 12</span>
+            <span class="font-medium text-amber-600">Requires manual review: 2</span>
+          </div>
+        </div>
+
+        <!-- Status dots -->
+        <div class="flex items-center gap-4 border-t border-slate-100 pt-2 text-xs text-slate-600">
+          <span class="inline-flex items-center gap-1.5">
+            <span class="relative flex size-2" aria-hidden="true">
+              <span
+                class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span class="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
+            </span>
+            Ollama Daemon Online
+          </span>
+          <span class="inline-flex items-center gap-1.5">
+            <span
+              class="relative inline-flex size-2 rounded-full bg-amber-500"
+              aria-hidden="true"
+            ></span>
+            VRAM High (~9.4GB)
+          </span>
+        </div>
+      </div>
+
+      <!-- Table skeleton -->
+      <div class="card space-y-4 p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">
+            Table Skeleton Loader
+          </h3>
+          <span class="font-mono text-[10px] text-slate-400">animate-pulse</span>
+        </div>
+
+        <div class="animate-pulse space-y-3" role="status" aria-label="Loading lab results">
+          <div class="h-8 w-full rounded-lg bg-slate-200"></div>
+          @for (bar of skeletonRows; track $index) {
+            <div class="space-y-2 rounded-lg border border-slate-200 bg-white p-3">
+              <div class="flex items-center justify-between">
+                <div class="h-4 rounded bg-slate-300" [style.width.%]="bar.title"></div>
+                <div class="h-4 w-14 rounded bg-slate-300"></div>
+              </div>
+              <div class="h-3 rounded bg-slate-200" [style.width.%]="bar.subtitle"></div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer
+    class="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pb-12 pt-8 text-xs text-slate-500 sm:flex-row"
+  >
+    <div class="flex items-center gap-2">
+      <span class="font-bold text-slate-800">Anand HealthPulse</span>
+      <span aria-hidden="true">•</span>
+      <span>Tailwind CSS &amp; Heroicons Design System V1.1</span>
+    </div>
+    <div class="text-[11px] text-slate-400">
+      Clinical Utility • Deterministic Calculations • Privacy-First Architecture
+    </div>
+  </footer>
+</div>

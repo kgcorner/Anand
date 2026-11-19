@@ -1,0 +1,51 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Brand bar: full-width sticky white bar (components.html "TOP APP HEADER / BRAND BAR").
+   Negative margins cancel the .app-shell padding so the bar spans the viewport edge to edge. */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  margin: -1rem -1rem 1rem;
+  padding: 0.875rem 1.5rem;
+  background-color: rgb(255 255 255 / 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-slate-200);
+}
+
+.app-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 80rem;
+  margin-inline: auto;
+}
+
+.app-logo {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+}
+
+/* Brand name: text-base font-bold tracking-tight, as in the design. Overrides the global h1 scale. */
+.app-header h1 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--color-slate-900);
+}
+
+.app-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  color: #666;
+}

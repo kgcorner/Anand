@@ -1,0 +1,358 @@
+@use 'tailwindcss';
+@import '@angular/cdk/overlay-prebuilt.css';
+
+/*
+ * Anand (HealthPulse) — global styles
+ * Source: design.md ("Clinical Clarity"). Tailwind CSS v4 utilities are used throughout;
+ * this file defines design tokens, base typography, clinical status classes,
+ * component primitives, freshness/allergy treatments and A4 print rules.
+ */
+
+@theme {
+  /* Typography — Inter is preferred; system fallbacks avoid any third-party font request. */
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Brand & interactive (teal) */
+  --color-brand: var(--color-teal-600);
+  --color-brand-hover: var(--color-teal-700);
+  --color-brand-subtle: var(--color-teal-50);
+
+  /* Surfaces */
+  --color-canvas: var(--color-slate-50);
+  --color-inset: var(--color-slate-100);
+
+  /* Type scale (design.md: Typography). Each token sets size, line height, weight and tracking. */
+  --text-display: 36px;
+  --text-display--line-height: 44px;
+  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.025em;
+
+  --text-headline-lg: 28px;
+  --text-headline-lg--line-height: 36px;
+  --text-headline-lg--font-weight: 600;
+  --text-headline-lg--letter-spacing: -0.02em;
+
+  --text-headline-lg-mobile: 24px;
+  --text-headline-lg-mobile--line-height: 32px;
+  --text-headline-lg-mobile--font-weight: 600;
+  --text-headline-lg-mobile--letter-spacing: -0.015em;
+
+  --text-headline-md: 20px;
+  --text-headline-md--line-height: 28px;
+  --text-headline-md--font-weight: 600;
+  --text-headline-md--letter-spacing: -0.015em;
+
+  --text-headline-sm: 16px;
+  --text-headline-sm--line-height: 24px;
+  --text-headline-sm--font-weight: 600;
+  --text-headline-sm--letter-spacing: -0.01em;
+
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-body-lg--font-weight: 400;
+  --text-body-lg--letter-spacing: -0.005em;
+
+  --text-body-md: 14px;
+  --text-body-md--line-height: 20px;
+  --text-body-md--font-weight: 400;
+
+  --text-body-sm: 12px;
+  --text-body-sm--line-height: 16px;
+  --text-body-sm--font-weight: 400;
+
+  --text-data-metric: 24px;
+  --text-data-metric--line-height: 28px;
+  --text-data-metric--font-weight: 600;
+  --text-data-metric--letter-spacing: -0.02em;
+
+  --text-data-metric-compact: 18px;
+  --text-data-metric-compact--line-height: 24px;
+  --text-data-metric-compact--font-weight: 600;
+  --text-data-metric-compact--letter-spacing: -0.01em;
+
+  --text-label-md: 13px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--font-weight: 500;
+
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--font-weight: 600;
+  --text-label-sm--letter-spacing: 0.04em;
+
+  --text-code: 12px;
+  --text-code--line-height: 16px;
+  --text-code--font-weight: 400;
+}
+
+/* ---------------------------------------------------------------------------
+ * Base
+ * ------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-body-md text-slate-900 antialiased;
+    /* design.md: Inter OpenType features — tabular figures, alternate digit and glyph forms. */
+    font-feature-settings:
+      'tnum' 1,
+      'cv05' 1,
+      'cv11' 1;
+  }
+
+  h1 {
+    @apply text-headline-lg-mobile text-slate-900 md:text-headline-lg;
+  }
+
+  h2 {
+    @apply text-headline-md text-slate-900;
+  }
+
+  h3 {
+    @apply text-headline-sm text-slate-900;
+  }
+
+  /* Keyboard focus: spec focus ring (teal, 25% halo) plus a solid outline for WCAG 2.4.7 visibility. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgb(13 148 136 / 0.25);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Components (reusable clinical UI primitives)
+ * ------------------------------------------------------------------------- */
+@layer components {
+  /* Panel & card (elevation 0): white surface, 1px slate-200 border, zero shadow (design.md: Surface Tiers). */
+  .card {
+    @apply rounded-lg border border-slate-200 bg-white p-4;
+  }
+
+  /* Inset well for secondary grouping. */
+  .well {
+    @apply rounded-md bg-inset p-3;
+  }
+
+  /* Numeric values, dates and LOINC/drug codes: stable column alignment. */
+  .numeric {
+    @apply font-sans tabular-nums;
+  }
+
+  .code {
+    @apply font-mono text-xs leading-4 text-slate-600;
+  }
+
+  /* Metadata: timestamps, freshness age, sample dates. */
+  .meta {
+    @apply text-xs font-medium text-slate-400;
+  }
+
+  /* Metric pairing: large value with a small uppercase unit (design.md: Tailwind Typographic Rules). */
+  .metric-value {
+    @apply text-data-metric tabular-nums text-slate-900;
+  }
+
+  .metric-unit {
+    @apply text-xs font-medium uppercase tracking-wide text-slate-500;
+  }
+
+  /* Pill / status chip base — combine with a status modifier below (design.md: Status Chips & Medical Badges). */
+  .pill {
+    @apply inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold tracking-wide uppercase;
+  }
+
+  /* Deterministic clinical status (never colour-only: always pair with a text label). */
+  .status-normal {
+    @apply border-emerald-200 bg-emerald-50 text-emerald-700;
+  }
+
+  .status-borderline {
+    @apply border-amber-200 bg-amber-50 text-amber-700;
+  }
+
+  .status-significant {
+    @apply border-red-200 bg-red-50 text-red-700;
+  }
+
+  /* Stale data (older than the test's stale_after_days). Rendered faded per spec. */
+  .status-stale {
+    @apply border-slate-200 bg-slate-100 text-slate-500;
+  }
+
+  /* Allergy alert: highest-emphasis treatment, shown at the top of the snapshot. */
+  .allergy-alert {
+    @apply flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-red-700;
+  }
+
+  /* Stale record (design.md: Stale Depth Attenuation): dashed, faded and grounded. */
+  .is-stale {
+    @apply border border-dashed border-slate-300 bg-slate-50/50 opacity-60;
+  }
+
+  /* Legal/clinical disclaimer footer. */
+  .disclaimer {
+    @apply text-xs text-slate-500;
+  }
+
+  /* Buttons (design.md: Components §1). Focus comes from the global :focus-visible rule in base. */
+  .btn {
+    @apply inline-flex h-9 items-center justify-center gap-2 rounded-lg px-4 text-sm font-medium transition-colors;
+  }
+
+  /* Compact variant for in-table clinical validation actions. */
+  .btn-compact {
+    @apply h-auto gap-1.5 px-3 py-1.5 text-xs font-semibold;
+  }
+
+  .btn-primary {
+    @apply bg-teal-600 text-white shadow-sm hover:bg-teal-700;
+  }
+
+  .btn-secondary {
+    @apply border border-slate-300 bg-white text-slate-700 shadow-sm hover:border-slate-400 hover:bg-slate-50;
+  }
+
+  .btn-destructive {
+    @apply border border-red-200 bg-red-50 text-red-700 hover:bg-red-100;
+  }
+
+  /* Interactive floating surface (elevation 1): popovers, dropdowns, contextual tooltips. */
+  .popover {
+    @apply rounded-lg border border-slate-200 bg-white;
+    box-shadow: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+  }
+
+  /* Inspection drawers and modal overlays (elevation 2). */
+  .overlay-scrim {
+    @apply fixed inset-0 bg-slate-900/40 backdrop-blur-sm;
+  }
+
+  .overlay-panel {
+    @apply rounded-lg border border-slate-200 bg-white;
+    box-shadow: 0 10px 15px -3px rgb(15 23 42 / 0.08);
+  }
+
+  /* Clinical data table (design.md: Components §3). */
+  .data-table {
+    @apply w-full overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm;
+  }
+
+  .data-table-head {
+    @apply border-b border-slate-200 bg-slate-50 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500;
+  }
+
+  .data-table-row {
+    @apply h-12 border-b border-slate-100 text-sm text-slate-900 transition-colors hover:bg-slate-50/80;
+  }
+
+  .data-table-row-critical {
+    @apply border-l-4 border-l-red-600 bg-red-50/30;
+  }
+
+  /* Range progress track with a status-coloured marker. Marker position is set inline. */
+  .range-track {
+    @apply relative h-1.5 w-24 overflow-hidden rounded-full bg-slate-200;
+  }
+
+  .range-marker {
+    @apply absolute top-1/2 size-2.5 -translate-y-1/2 rounded-full ring-2 ring-white;
+  }
+
+  .range-marker-normal {
+    @apply bg-emerald-500;
+  }
+
+  .range-marker-borderline {
+    @apply bg-amber-500;
+  }
+
+  .range-marker-significant {
+    @apply bg-red-600;
+  }
+
+  /* Anatomical organ map (design.md: Components §5). */
+  .organ-canvas {
+    @apply rounded-lg border border-slate-200 bg-white p-4;
+  }
+
+  .organ-path {
+    @apply cursor-pointer fill-slate-100 stroke-slate-300 transition-colors duration-200 hover:fill-slate-200;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .organ-normal {
+    @apply fill-emerald-500/20 stroke-emerald-500;
+  }
+
+  .organ-borderline {
+    @apply fill-amber-500/20 stroke-amber-500;
+  }
+
+  .organ-significant {
+    @apply fill-red-600/20 stroke-red-600 animate-pulse;
+  }
+
+  .organ-stale {
+    @apply fill-slate-100 stroke-slate-300 opacity-50;
+    stroke-dasharray: 4 2;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Print — A4 one-page doctor-visit snapshot (spec §5, Print row)
+ * ------------------------------------------------------------------------- */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide navigation, toolbars and interactive controls. */
+  .no-print,
+  button,
+  nav {
+    display: none !important;
+  }
+
+  /* Crisp, high-contrast borders instead of shadows. */
+  .card,
+  .pill,
+  .allergy-alert,
+  .data-table {
+    box-shadow: none !important;
+    border-color: #000 !important;
+  }
+
+  a[href]::after {
+    content: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Motion preferences
+ * ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
