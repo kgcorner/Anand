@@ -15,6 +15,7 @@ import {
   createSessionTokenService,
   SqliteIdentityRepository,
 } from './modules/identity';
+import { createHeartbeatService } from './modules/heartbeat';
 
 const config = readConfig();
 const logger = createLogger('server');
@@ -32,8 +33,9 @@ const identityRepository = new SqliteIdentityRepository(database);
 const passwordHasher = createScryptPasswordHasher();
 const sessionTokens = createSessionTokenService(config.sessionSecret, config.sessionTtlSeconds);
 const identityService = createIdentityService(identityRepository, passwordHasher, sessionTokens);
+const heartbeatService = createHeartbeatService(identityRepository);
 
-const app = createApp({ identityService, sessionTokens });
+const app = createApp({ identityService, sessionTokens, heartbeatService });
 
 const server = app.listen(config.port, config.host);
 server.once('listening', () => {

@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { ConflictError, InvalidCredentialsError, ValidationError } from '../../platform/errors';
+import { ConflictError, ForbiddenError, InvalidCredentialsError, ValidationError } from '../../platform/errors';
 import type { IdentityRepository } from './identity.repository';
 import type { PasswordHasher } from './password-hasher';
 import type { SessionTokenService } from './session-token';
@@ -70,8 +70,13 @@ export function createIdentityService(
   sessionTokens: SessionTokenService,
 ): IdentityService {
   return {
-    /** Register: validate → check uniqueness (409) → hash → persist → issue session token. */
+    /** Register: bootstrap guard → validate → check uniqueness (409) → hash → persist → issue session token. */
     async register(body: unknown): Promise<SessionResponse> {
+      // Single-administrator model: once the first account exists, public
+      // registration is closed. The setup form and this check are the same gate.
+      if (await identityRepository.hasAnyUser()) {
+        throw new ForbiddenError('Registration is closed');
+      }
       const request = parseRegisterRequest(body);
       const existing = await identityRepository.findByUsername(request.username);
       if (existing !== null) throw new ConflictError('Username already taken');

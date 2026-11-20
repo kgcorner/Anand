@@ -28,4 +28,14 @@ export class SqliteIdentityRepository extends SqliteRepository<UserAccount> impl
   async findByUsername(username: string): Promise<UserAccount | null> {
     return this.find('username', username);
   }
+
+  /** Total number of accounts (0 = first-run setup pending). */
+  async countUsers(): Promise<number> {
+    return this.count();
+  }
+
+  /** True when at least one account exists. */
+  async hasAnyUser(): Promise<boolean> {
+    return (await this.countUsers()) > 0;
+  }
 }
