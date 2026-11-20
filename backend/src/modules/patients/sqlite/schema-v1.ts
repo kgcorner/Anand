@@ -1,3 +1,8 @@
+/**
+ * Schema v1 for the patients table. JSON columns hold embedded profile data.
+ * owner_user_id FK to users enforces single ownership; index powers listByOwner.
+ * Append-only: never edit once deployed.
+ */
 export const patientsSchemaV1 = `
   CREATE TABLE patients (
     id TEXT NOT NULL PRIMARY KEY,

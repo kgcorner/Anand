@@ -1,3 +1,8 @@
+/**
+ * Schema v1 for the medications table. FK to patients and, when linked, to
+ * medical_visits via the composite (patient_id, visit_id) key. CHECKs pin status
+ * and entry_source to the SRS vocabulary. Append-only: never edit once deployed.
+ */
 export const medicationsSchemaV1 = `
   CREATE TABLE medications (
     id TEXT NOT NULL PRIMARY KEY,

@@ -1,3 +1,7 @@
+/**
+ * Schema v1 for the vitals table. FK to patients; index powers newest-first patient lists.
+ * Append-only: never edit once deployed.
+ */
 export const vitalsSchemaV1 = `
   CREATE TABLE vitals (
     id TEXT NOT NULL PRIMARY KEY,

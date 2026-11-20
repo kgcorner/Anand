@@ -12,6 +12,12 @@ const migrations = [
   [identitySchemaV1, patientsSchemaV1, vitalsSchemaV1, visitsSchemaV1, medicationsSchemaV1, documentsSchemaV1, labResultsSchemaV1],
 ];
 
+/**
+ * Runs all pending schema migrations in one transaction per version.
+ * The user's PRAGMA user_version tracks the applied version; newer-than-known
+ * databases are rejected rather than silently accepted. A failure rolls back
+ * the whole version, so a partial DDL patch can never leave the schema half-applied.
+ */
 export function migrateSqlite(database: Database.Database): void {
   database.transaction(() => {
     const current = database.pragma('user_version', { simple: true });

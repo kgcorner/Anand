@@ -1,3 +1,9 @@
+/**
+ * Schema v1 for the medical_visits table. document_ids is a JSON array of document-id
+ * references (not a join — visits never reads the documents collection, F1).
+ * Composite UNIQUE supports cross-patient FK checks from medications/lab_results.
+ * Append-only: never edit once deployed.
+ */
 export const visitsSchemaV1 = `
   CREATE TABLE medical_visits (
     id TEXT NOT NULL PRIMARY KEY,

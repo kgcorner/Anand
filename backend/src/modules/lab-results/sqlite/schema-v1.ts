@@ -1,3 +1,9 @@
+/**
+ * Schema v1 for the lab_results table. The CHECKs encode SRS §6 invariants directly in
+ * SQLite: severity is non-null iff status is HIGH/LOW, and non-UNKNOWN requires both a
+ * value and a range. Composite FKs prevent cross-patient document/visit links.
+ * Append-only: never edit once deployed.
+ */
 export const labResultsSchemaV1 = `
   CREATE TABLE lab_results (
     id TEXT NOT NULL PRIMARY KEY,

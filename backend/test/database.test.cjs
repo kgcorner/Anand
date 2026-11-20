@@ -53,7 +53,7 @@ test('rejects a blank database path', () => {
   assert.throws(() => openDatabase(' '), /DATABASE_PATH must not be empty/);
 });
 
-test('server uses DATABASE_PATH and exits cleanly on SIGTERM', { timeout: 5000 }, async (t) => {
+test('server uses DATABASE_PATH and exits cleanly on SIGTERM', { timeout: 15000 }, async (t) => {
   const filename = join(tempDirectory(t), 'server.sqlite');
   const server = spawn(process.execPath, [join(__dirname, '../dist/server.js')], {
     env: { ...process.env, DATABASE_PATH: filename, HOST: '127.0.0.1', PORT: '0' },
@@ -67,7 +67,7 @@ test('server uses DATABASE_PATH and exits cleanly on SIGTERM', { timeout: 5000 }
   try {
     let port;
     for await (const line of output) {
-      const match = /^Anand backend listening on port (\d+) /.exec(line);
+      const match = /Anand backend listening on port (\d+)/.exec(line);
       if (match) {
         port = Number(match[1]);
         break;

@@ -1,3 +1,8 @@
+/**
+ * Schema v1 for the documents table. CHECKs pin file_type and processing_status to the
+ * SRS vocabulary; extraction is a JSON object or NULL. Composite UNIQUE supports the
+ * (patient_id, document_id) FK from lab_results. Append-only: never edit once deployed.
+ */
 export const documentsSchemaV1 = `
   CREATE TABLE documents (
     id TEXT NOT NULL PRIMARY KEY,
