@@ -35,7 +35,7 @@ const sessionTokens = createSessionTokenService(config.sessionSecret, config.ses
 const identityService = createIdentityService(identityRepository, passwordHasher, sessionTokens);
 const heartbeatService = createHeartbeatService(identityRepository);
 
-const app = createApp({ identityService, sessionTokens, heartbeatService });
+const app = createApp({ identityService, sessionTokens, heartbeatService }, config.corsOrigins);
 
 const server = app.listen(config.port, config.host);
 server.once('listening', () => {
