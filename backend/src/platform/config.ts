@@ -13,6 +13,8 @@ export interface AppConfig {
   sessionSecret: string;
   /** How long a session token stays valid, in seconds (SESSION_TTL_SECONDS). */
   sessionTtlSeconds: number;
+  /** Comma-separated list of origins allowed by CORS. Default: Angular dev server. */
+  corsOrigins: string[];
 }
 
 /** Parses the PORT env var; returns 8080 when unset, throws on non-integer or out-of-range. */
@@ -47,6 +49,12 @@ function readSessionTtlSeconds(raw: string | undefined): number {
   return ttl;
 }
 
+/** Parses CORS_ORIGINS into a list of trusted origins. Defaults to the Angular dev server on :4200. */
+function readCorsOrigins(raw: string | undefined): string[] {
+  if (raw === undefined || raw.trim() === '') return ['http://localhost:4200', 'http://127.0.0.1:4200'];
+  return raw.split(',').map((origin) => origin.trim()).filter((origin) => origin !== '');
+}
+
 /**
  * Reads and validates all environment configuration into an AppConfig.
  * Call once at process startup (server.ts). Throws on invalid values —
@@ -59,5 +67,6 @@ export function readConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     databasePath: env.DATABASE_PATH?.trim() ? env.DATABASE_PATH : 'data/anand.sqlite',
     sessionSecret: readSessionSecret(env.SESSION_SECRET),
     sessionTtlSeconds: readSessionTtlSeconds(env.SESSION_TTL_SECONDS),
+    corsOrigins: readCorsOrigins(env.CORS_ORIGINS),
   };
 }

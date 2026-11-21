@@ -68,4 +68,10 @@ export class SqliteRepository<T extends object> {
     const result = this.database.prepare(`UPDATE ${this.table} SET ${assignments} WHERE id = @id`).run({ ...this.encode(value), id });
     return result.changes > 0;
   }
+
+  /** Total number of rows in the table. Used by the bootstrap probe to detect first-run state. */
+  protected count(): number {
+    const row = this.database.prepare(`SELECT COUNT(*) AS total FROM ${this.table}`).get() as { total: number } | undefined;
+    return row?.total ?? 0;
+  }
 }

@@ -13,4 +13,8 @@ export interface IdentityRepository {
   findById(id: string): Promise<UserAccount | null>;
   /** Returns the account with this login handle, or null. */
   findByUsername(username: string): Promise<UserAccount | null>;
+  /** Number of stored accounts. Zero means first-run setup is still pending. */
+  countUsers(): Promise<number>;
+  /** True when at least one account exists. */
+  hasAnyUser(): Promise<boolean>;
 }
